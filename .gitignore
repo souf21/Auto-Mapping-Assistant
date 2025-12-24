@@ -26,3 +26,5 @@ Thumbs.db
 # Optional: editor files
 .vscode/
 .idea/
+
+backend/src/uploads/tmp

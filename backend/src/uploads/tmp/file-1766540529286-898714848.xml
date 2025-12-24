@@ -1,0 +1,26 @@
+<customers>
+  <customer>
+    <full_name>John Carter</full_name>
+    <company>BlueWave Ltd</company>
+    <email_address>john.carter@bluewave.com</email_address>
+    <phone>+1 202 555 0101</phone>
+    <postal_address>120 Market Street</postal_address>
+    <language_code>EN</language_code>
+  </customer>
+  <customer>
+    <full_name>Sarah Johnson</full_name>
+    <company>NorthPeak Inc</company>
+    <email_address>s.johnson@northpeak.com</email_address>
+    <phone>+1 202 555 0102</phone>
+    <postal_address>45 Sunset Avenue</postal_address>
+    <language_code>EN</language_code>
+  </customer>
+  <customer>
+    <full_name>Michael Brown</full_name>
+    <company>TechNova</company>
+    <email_address>m.brown@technova.io</email_address>
+    <phone>+1 202 555 0103</phone>
+    <postal_address>88 River Road</postal_address>
+    <language_code>EN</language_code>
+  </customer>
+</customers>

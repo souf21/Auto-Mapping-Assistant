@@ -1,0 +1,115 @@
+// services/universalParser.js
+const fs = require("fs");
+const Papa = require("papaparse");
+const XLSX = require("xlsx");
+const xml2js = require("xml2js");
+const pdfParse = require("pdf-parse");
+const path = require("path");
+
+function detectExtension(file) {
+  return path.extname(file.originalname || file.filename || "").toLowerCase().replace(".", "");
+}
+
+async function parseCSV(filePath) {
+  const fileContent = fs.readFileSync(filePath, "utf8");
+  const result = Papa.parse(fileContent, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
+  const rows = result.data || [];
+  const headers = result.meta.fields || (rows[0] ? Object.keys(rows[0]) : []);
+  return { headers, rows };
+}
+
+async function parseTSV(filePath) {
+  const fileContent = fs.readFileSync(filePath, "utf8");
+  const result = Papa.parse(fileContent, {
+    header: true,
+    skipEmptyLines: true,
+    delimiter: "\t",
+  });
+
+  const rows = result.data || [];
+  const headers = result.meta.fields || (rows[0] ? Object.keys(rows[0]) : []);
+  return { headers, rows };
+}
+
+async function parseJSON(filePath) {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const parsed = JSON.parse(raw);
+
+  if (!Array.isArray(parsed)) {
+    throw new Error("JSON must be an array of objects");
+  }
+
+  const rows = parsed;
+  const headers = rows[0] ? Object.keys(rows[0]) : [];
+  return { headers, rows };
+}
+
+async function parseExcel(filePath) {
+  const workbook = XLSX.readFile(filePath);
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" }); // defval prevents undefined
+  const headers = rows[0] ? Object.keys(rows[0]) : [];
+  return { headers, rows };
+}
+
+async function parseXML(filePath) {
+  const xmlContent = fs.readFileSync(filePath, "utf8");
+  const parsed = await xml2js.parseStringPromise(xmlContent);
+
+  // This depends heavily on your XML structure.
+  // Here we assume something like <root><row><name>..</name><email>..</email></row>...</root>
+  const rootKey = Object.keys(parsed)[0];
+  const rowsArray = parsed[rootKey]?.row || parsed[rootKey]?.item || [];
+
+  const rows = rowsArray.map((node) => {
+    const obj = {};
+    for (const key of Object.keys(node)) {
+      // node[key] is usually an array like [value]
+      obj[key] = node[key]?.[0] ?? "";
+    }
+    return obj;
+  });
+
+  const headers = rows[0] ? Object.keys(rows[0]) : [];
+  return { headers, rows };
+}
+
+async function parsePDF(filePath) {
+  const dataBuffer = fs.readFileSync(filePath);
+  const data = await pdfParse(dataBuffer);
+  const text = data.text;
+
+  // TODO: implement PDF table parsing based on your specific layout
+  // For now, just throw an error or return an empty structure.
+  throw new Error("PDF parsing not implemented yet");
+}
+
+async function parseFile(file) {
+  const ext = detectExtension(file);
+
+  switch (ext) {
+    case "csv":
+      return parseCSV(file.path);
+    case "tsv":
+      return parseTSV(file.path);
+    case "json":
+      return parseJSON(file.path);
+    case "xlsx":
+    case "xls":
+      return parseExcel(file.path);
+    case "xml":
+      return parseXML(file.path);
+    case "pdf":
+      return parsePDF(file.path);
+    default:
+      throw new Error(`Unsupported file type: .${ext}`);
+  }
+}
+
+module.exports = {
+  parseFile,
+};
