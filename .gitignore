@@ -11,7 +11,7 @@ frontend/modaresa/.next/
 frontend/out/
 
 # Backend temp/uploads
-backend/uploads/tmp/
+backend/src/uploads/tmp/
 
 # Logs
 *.log
@@ -27,4 +27,3 @@ Thumbs.db
 .vscode/
 .idea/
 
-backend/src/uploads/tmp
