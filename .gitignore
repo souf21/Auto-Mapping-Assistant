@@ -11,7 +11,7 @@ frontend/modaresa/.next/
 frontend/out/
 
 # Backend temp/uploads
-backend/src/uploads/tmp/
+backend/src/uploads/tmp
 
 # Logs
 *.log
