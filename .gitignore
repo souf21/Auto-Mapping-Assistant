@@ -1,17 +1,14 @@
-# Node modules
-frontend/modaresa/node_modules/
-backend/node_modules/
+# Dependencies
+**/node_modules/
 
-# Environment variables
-frontend/.env
-backend/.env
+# Environment files
+**/.env
+**/.env.*
 
-# Next.js build / cache
-frontend/modaresa/.next/
-frontend/out/
-
-# Backend temp/uploads
-backend/src/uploads/tmp
+# Next.js / build output
+**/.next/
+**/out/
+**/build/
 
 # Logs
 *.log
@@ -19,11 +16,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS files
+# Uploads / temp
+backend/src/uploads/tmp/
+
+# OS / Editor
 .DS_Store
 Thumbs.db
-
-# Optional: editor files
 .vscode/
 .idea/
-

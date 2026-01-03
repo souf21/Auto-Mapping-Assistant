@@ -9,6 +9,8 @@ export default function MappingPage() {
   const router = useRouter();
   const { fileId } = router.query;
 
+  const [mappingProgress, setMappingProgress] = useState(0);
+  const [mappingDone, setMappingDone] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   const [headers, setHeaders] = useState([]);
   const [sampleRows, setSampleRows] = useState([]);
@@ -47,12 +49,57 @@ export default function MappingPage() {
     });
   };
 
+  useEffect(() => {
+    if (headers.length === 0) return;
+
+    const fetchAutoMapping = async () => {
+      setMappingProgress(0);
+      setMappingDone(false);
+
+      const progressInterval = setInterval(() => {
+        setMappingProgress((prev) => {
+          if (prev >= 95) return prev;
+          return prev + Math.floor(Math.random() * 10) + 1;
+        });
+      }, 300);
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auto-map", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            headers,
+            schema: requiredFields.map(({ key, label }) => ({ key, label })),
+          }),
+        });
+
+        const data = await res.json();
+
+        if (data.mapping) {
+          const reversed = {};
+          for (const [uploaded, internal] of Object.entries(data.mapping)) {
+            reversed[internal] = uploaded;
+          }
+          setMapping(reversed);
+        }
+
+        setMappingProgress(100);
+        setMappingDone(true);
+      } catch (err) {
+        console.error("Auto-mapping failed:", err);
+      } finally {
+        clearInterval(progressInterval);
+      }
+    };
+
+    fetchAutoMapping();
+  }, [headers]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />
 
       <div className="p-6 max-w-3xl mx-auto">
-
         {/* Page Title */}
         <div className="mb-8">
           <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
@@ -68,6 +115,25 @@ export default function MappingPage() {
           <p className="text-red-700 mb-4 bg-red-100 p-3 rounded-md border border-red-300">
             {error}
           </p>
+        )}
+
+        {/* Progress Bar */}
+        {mappingProgress > 0 && !mappingDone && (
+          <div className="mb-6">
+            <p className="text-sm text-gray-600 mb-1">Auto-mapping in progress...</p>
+            <div className="w-full bg-gray-200 rounded-full h-3">
+              <div
+                className="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                style={{ width: `${mappingProgress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
+
+        {mappingDone && (
+          <div className="mb-6 transition-all duration-500">
+            <p className="text-green-700 font-medium">✅ Mapping complete!</p>
+          </div>
         )}
 
         {/* Mapping Card */}
@@ -139,16 +205,26 @@ export default function MappingPage() {
           </div>
         )}
 
-        {/* Continue Button */}
-        <button
-          onClick={() => setShowImportModal(true)}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md shadow-sm transition cursor-pointer"
-        >
-          Continue to Import
-        </button>
+        {/* Continue Button (only after mapping is done) */}
+        {mappingDone && (
+          <div className="mt-4">
+            <button
+              onClick={() => {
+                localStorage.setItem("csvMapping", JSON.stringify(mapping));
+                setShowImportModal(true);
+              }}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md shadow-sm transition cursor-pointer"
+            >
+              Continue to Import
+            </button>
+          </div>
+        )}
+
+
+
       </div>
 
-      {/* Modal INSIDE return */}
+      {/* Import Modal */}
       {showImportModal && (
         <ImportModal
           fileId={fileId}
