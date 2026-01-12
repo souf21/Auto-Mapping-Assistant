@@ -18,6 +18,6 @@ Includes: Login, Dashboard, File Uploads.
 ### 1. Clone repo
 
 ```bash
-git clone https://github.com/souf21/Brand_crm.git
+git clone https://github.com/souf21/Auto-Mapping-Assistant/edit/main/README.md
 cd Brand_crm
 ```
