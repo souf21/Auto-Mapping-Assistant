@@ -23,19 +23,6 @@
 | AI Engine    | Ollama (LLaMA2) or any LLM API |
 | File Uploads | Multer + CSV Parser            |
 
-## Folder Structure
-
-Auto-Mapping-Assistant/
-├── backend/ # Express.js API
-│ └── src/ # Routes and logic
-│ └── api/auto-map # AI mapping endpoint
-├── frontend/brand/ # Next.js frontend
-│ ├── src/ # Pages, components, utils
-│ └── public/ # Static assets
-├── .nvmrc # Node version
-├── .gitignore
-└── README.md
-
 ## Getting Started
 
 ### Prerequisites
@@ -51,7 +38,6 @@ cd Auto-Mapping-Assistant
 
 ### 2. AI setup
 
-<<<<<<< HEAD
 This project uses [Ollama](https://ollama.com) to run LLaMA2 locally.
 
 IN TERMINAL :
