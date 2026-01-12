@@ -1,4 +1,6 @@
-# Auto-Mapping Assistant : A full-stack AI-powered tool that automates the mapping of uploaded CSV files to internal CRM schemas even when headers are multilingual or inconsistently named.
+# Auto-Mapping Assistant :
+
+A full-stack AI-powered tool that automates the mapping of uploaded CSV files to internal CRM schemas even when headers are multilingual or inconsistently named.
 
 # Watch Live demo
 
@@ -23,19 +25,6 @@
 | AI Engine    | Ollama (LLaMA2) or any LLM API |
 | File Uploads | Multer + CSV Parser            |
 
-## Folder Structure
-
-Auto-Mapping-Assistant/
-├── backend/ # Express.js API
-│ └── src/ # Routes and logic
-│ └── api/auto-map # AI mapping endpoint
-├── frontend/brand/ # Next.js frontend
-│ ├── src/ # Pages, components, utils
-│ └── public/ # Static assets
-├── .nvmrc # Node version
-├── .gitignore
-└── README.md
-
 ## Getting Started
 
 ### Prerequisites
@@ -46,33 +35,39 @@ Auto-Mapping-Assistant/
 
 ### 1. Clone the repository
 
-git clone https://github.com/souf21/Auto-Mapping-Assistant.git
-cd Auto-Mapping-Assistant
+- git clone https://github.com/souf21/Auto-Mapping-Assistant.git
+
+- cd Auto-Mapping-Assistant
 
 ### 2. AI setup
 
-<<<<<<< HEAD
 This project uses [Ollama](https://ollama.com) to run LLaMA2 locally.
 
 IN TERMINAL :
-ollama pull llama2:7b
-ollama run llama2:7b
+
+- ollama pull llama2:7b
+
+- ollama run llama2:7b
 
 ### 3. Environment variables
 
 In backend(backend/.env) :
 
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/mapping-assistant
-JWT_SECRET=your_jwt_secret
-API_URL=http://localhost:11434
+- PORT=5000
+
+- MONGO_URI=mongodb://localhost:27017/mapping-assistant
+
+- JWT_SECRET=your_jwt_secret
+
+- API_URL=http://localhost:11434
 
 In frontend(frontend/brand/.env.local):
-NEXT_PUBLIC_API_URL=http://localhost:5000
+
+- NEXT_PUBLIC_API_URL=http://localhost:5000
 
 ### 4. Start the app
 
-docker-compose up --build
+- docker-compose up --build
 
 ### 5. How It Works
 
@@ -83,9 +78,3 @@ docker-compose up --build
 ### 6. About
 
 This project solves a real-world data onboarding challenge using AI and modern web technologies.
-=======
-```bash
-git clone https://github.com/souf21/Auto-Mapping-Assistant/edit/main/README.md
-cd Brand_crm
-```
->>>>>>> b1f72f7a81f418aaa83f45e261b743af77e9e35e
