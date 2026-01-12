@@ -51,6 +51,7 @@ cd Auto-Mapping-Assistant
 
 ### 2. AI setup
 
+<<<<<<< HEAD
 This project uses [Ollama](https://ollama.com) to run LLaMA2 locally.
 
 IN TERMINAL :
@@ -82,3 +83,9 @@ docker-compose up --build
 ### 6. About
 
 This project solves a real-world data onboarding challenge using AI and modern web technologies.
+=======
+```bash
+git clone https://github.com/souf21/Auto-Mapping-Assistant/edit/main/README.md
+cd Brand_crm
+```
+>>>>>>> b1f72f7a81f418aaa83f45e261b743af77e9e35e
