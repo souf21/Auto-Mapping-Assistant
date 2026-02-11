@@ -1,6 +1,6 @@
 # Auto-Mapping Assistant :
 
-A full-stack AI-powered tool that automates the mapping of uploaded CSV files to internal CRM schemas even when headers are multilingual or inconsistently named.
+An AI-powered tool that automates the mapping of uploaded CSV files to internal CRM schemas even when headers are multilingual or inconsistently named.
 
 # Watch Live demo
 
